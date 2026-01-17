@@ -1,0 +1,130 @@
+:root {
+    --bg-primary: #fff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #f1f3f4;
+    --text-primary: #202124;
+    --text-secondary: #5f6368;
+    --text-muted: #9aa0a6;
+    --border: #dadce0;
+    --accent: #1a73e8;
+    --accent-hover: #1557b0;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+body, .gradio-container {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+footer, .svelte-1rjryqp { display: none !important; }
+
+.chat-container { display: flex; flex-direction: column; height: calc(100vh - 60px); max-width: 800px; margin: 0 auto; padding: 0 32px; width: 100%; box-sizing: border-box; }
+.chat-header { padding: 32px 0 24px; border-bottom: 1px solid var(--border); margin-bottom: 24px; text-align: center; }
+.chat-title { font-size: 24px !important; font-weight: 700 !important; margin: 0 0 8px !important; }
+.chat-description { font-size: 14px !important; color: var(--text-secondary) !important; margin: 0 !important; }
+
+#chatbot { 
+    background: var(--bg-primary) !important; 
+    border: none !important; 
+    flex: 1; 
+    min-height: 300px; 
+    max-height: calc(100vh - 350px); 
+    overflow-y: auto; 
+    padding: 16px 0 !important; 
+}
+
+/* Reset all backgrounds in chatbot */
+#chatbot *,
+#chatbot .message-wrap,
+#chatbot .message,
+#chatbot .panel-full-width,
+#chatbot .bot,
+#chatbot .user {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* User messages */
+#chatbot .user .message,
+#chatbot .user.message {
+    background: var(--accent) !important;
+    color: white !important;
+    border-radius: 18px 18px 4px 18px !important;
+    padding: 12px 16px !important;
+    max-width: 70% !important;
+    margin-left: auto !important;
+}
+
+/* Bot messages */
+#chatbot .bot .message,
+#chatbot .bot.message {
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border-radius: 18px 18px 18px 4px !important;
+    border: 1px solid var(--border) !important;
+    padding: 12px 16px !important;
+    max-width: 70% !important;
+}
+
+.input-section { padding: 24px 0 16px; background: var(--bg-primary); border-top: 1px solid var(--border); margin-top: auto; width: 100%; }
+.input-row { display: flex !important; gap: 16px; align-items: center !important; width: 100%; }
+.input-row > div { flex: 1; }
+.input-row > div:last-child { flex: 0 0 auto; }
+
+#msg-input { width: 100% !important; background: var(--bg-secondary) !important; border: 1px solid var(--border) !important; border-radius: var(--radius-lg) !important; padding: 16px 24px !important; color: var(--text-primary) !important; font-size: 14px !important; min-height: 48px; max-height: 150px; transition: border-color 150ms, box-shadow 150ms; box-sizing: border-box; }
+#msg-input:focus { border-color: var(--accent) !important; outline: none !important; box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15) !important; }
+#msg-input::placeholder { color: var(--text-muted) !important; }
+
+#send-btn { background: var(--accent) !important; border: none !important; border-radius: var(--radius-md) !important; padding: 16px 32px !important; color: white !important; font-weight: 600 !important; font-size: 14px !important; cursor: pointer; transition: background 150ms; min-width: 100px; height: 48px; }
+#send-btn:hover { background: var(--accent-hover) !important; }
+
+#clear-btn { background: transparent !important; border: 1px solid var(--border) !important; color: var(--text-secondary) !important; border-radius: var(--radius-md) !important; padding: 8px 16px !important; font-size: 13px !important; cursor: pointer; margin-top: 8px; display: block; width: fit-content; }
+#clear-btn:hover { color: var(--text-primary) !important; background: var(--bg-secondary) !important; }
+
+.tabs { background: var(--bg-primary) !important; border-bottom: 1px solid var(--border) !important; }
+.tab-nav { background: var(--bg-primary) !important; border: none !important; padding: 0 24px !important; max-width: 900px; margin: 0 auto; }
+.tab-nav button { background: transparent !important; color: var(--text-secondary) !important; border: none !important; border-bottom: 2px solid transparent !important; padding: 16px 24px !important; font-size: 14px !important; font-weight: 500 !important; cursor: pointer; }
+.tab-nav button:hover { color: var(--text-primary) !important; background: var(--bg-secondary) !important; }
+.tab-nav button.selected { color: var(--accent) !important; border-bottom-color: var(--accent) !important; background: transparent !important; font-weight: 600 !important; }
+
+.form-container, .settings-container { max-width: 700px; margin: 0 auto; padding: 32px; }
+.settings-section { background: var(--bg-primary); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; }
+.settings-title { font-size: 16px !important; font-weight: 600 !important; margin: 0 0 24px !important; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+
+label, .label-wrap span { color: var(--text-primary) !important; font-size: 14px !important; font-weight: 500 !important; margin-bottom: 8px !important; }
+input[type="text"], input[type="password"], textarea, .textbox { background: var(--bg-secondary) !important; border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important; color: var(--text-primary) !important; padding: 16px !important; font-size: 14px !important; }
+input:focus, textarea:focus { border-color: var(--accent) !important; outline: none !important; box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15) !important; }
+
+.dropdown, select { background: var(--bg-secondary) !important; border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important; color: var(--text-primary) !important; }
+.slider input[type="range"] { accent-color: var(--accent); }
+
+.primary { background: var(--accent) !important; border: none !important; color: white !important; border-radius: var(--radius-md) !important; padding: 16px 32px !important; font-weight: 600 !important; font-size: 14px !important; cursor: pointer; }
+.primary:hover { background: var(--accent-hover) !important; }
+.secondary { background: var(--bg-secondary) !important; border: 1px solid var(--border) !important; color: var(--text-primary) !important; border-radius: var(--radius-md) !important; padding: 16px 32px !important; font-weight: 500 !important; cursor: pointer; }
+.secondary:hover { background: var(--bg-tertiary) !important; }
+
+.inner-tabs .tab-nav { padding: 0 !important; background: var(--bg-secondary) !important; border-radius: var(--radius-md); margin-bottom: 24px; }
+.inner-tabs .tab-nav button { padding: 16px 24px !important; font-size: 13px !important; border-radius: var(--radius-md) !important; }
+.inner-tabs .tab-nav button.selected { background: var(--bg-primary) !important; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.result-box textarea { background: var(--bg-secondary) !important; font-family: 'SF Mono', 'Fira Code', monospace !important; font-size: 13px !important; border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important; }
+
+.file-preview { background: var(--bg-secondary) !important; border: 2px dashed var(--border) !important; border-radius: var(--radius-md) !important; }
+.file-preview:hover { border-color: var(--accent) !important; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+@media (max-width: 768px) {
+    .chat-container, .settings-container, .form-container { padding: 0 16px; }
+    #send-btn { min-width: 80px !important; padding: 16px !important; }
+}
+
+.gradio-container > .main { max-width: 100% !important; }
+.tabitem { display: flex; justify-content: center; }
