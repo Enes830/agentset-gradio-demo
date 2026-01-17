@@ -5,48 +5,9 @@ from agentset_gradio_demo.document_ingester import DocumentIngester
 from agentset_gradio_demo import config
 
 css = """
+#title { font-size: 2.2rem; font-weight: bold; text-align: center; margin-bottom: 0.5em; color: #2e3a59; }
+#desc { font-size: 1.1rem; text-align: center; color: #6c7a92; margin-bottom: 1em; }
 footer { display: none !important; }
-span[data-testid="block-info"], .label-wrap span, label span, 
-[class*="label"] span, [class*="svelte"] span { background: transparent !important; background-color: transparent !important; }
-.app-header { text-align: center; padding: 24px 0 16px; border-bottom: 1px solid #e5e7eb; margin-bottom: 0; }
-.app-title { font-size: 2rem !important; font-weight: 800 !important; margin: 0 !important;
-    background: linear-gradient(135deg, #1a73e8 0%, #6366f1 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.chat-container { max-width: 850px; margin: 0 auto; padding: 20px 24px; }
-.chat-input-area { background: #fafafa; border-radius: 16px; padding: 16px; margin-top: 16px; border: 1px solid #e5e7eb; }
-.message-buttons-right, .message-buttons-left, .copy-button, .share-button, .delete-button,
-button[aria-label="Share"], button[aria-label="Delete"], button[aria-label="Copy"],
-.icon-button-wrapper, .icon-button { display: none !important; }
-#chatbot { border: 1px solid #e5e7eb !important; border-radius: 16px !important; background: white !important; min-height: 400px; }
-#chatbot .placeholder { opacity: 1 !important; }
-.chat-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    text-align: center; color: #64748b; padding: 40px 20px; height: 100%; }
-.chat-placeholder h4 { font-size: 1.25rem; font-weight: 700; color: #1e293b; margin: 0 0 6px 0;
-    background: linear-gradient(135deg, #1a73e8 0%, #6366f1 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.chat-placeholder p { font-size: 0.9rem; margin: 0 0 24px 0; max-width: 380px; line-height: 1.6; color: #64748b; }
-.chat-placeholder .steps-label { font-size: 0.75rem; font-weight: 700; color: #1a73e8; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 0.5px; }
-.chat-placeholder .steps { text-align: center; font-size: 0.85rem; color: #475569; 
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); 
-    padding: 16px 24px; border-radius: 12px; border: 1px solid #e2e8f0; }
-.chat-placeholder .steps div { margin-bottom: 8px; line-height: 1.5; }
-.chat-placeholder .steps div:last-child { margin-bottom: 0; }
-.form-container { max-width: 700px; margin: 0 auto; padding: 20px; }
-.result-box { min-height: auto !important; }
-.result-box textarea { min-height: 36px !important; }
-[role="tablist"] { justify-content: center !important; }
-#chatbot details { margin-top: 12px; }
-#chatbot details summary { 
-    display: inline-block; padding: 6px 14px; font-size: 0.8rem; font-weight: 500;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); 
-    border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer;
-    color: #475569; transition: all 0.2s ease; list-style: none;
-}
-#chatbot details summary::-webkit-details-marker { display: none; }
-#chatbot details summary:hover { background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); color: #1e293b; }
-#chatbot details[open] summary { background: linear-gradient(135deg, #1a73e8 0%, #6366f1 100%); color: white; border-color: transparent; }
-#chatbot details pre { margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.8rem; overflow-x: auto; }
 """
 
 class AppState:
@@ -86,7 +47,7 @@ def chat(message, history):
         result = state.get_rag_system().query(message, top_k=state.top_k, min_score=state.min_score)
         response = result["response"]
         if ctx := result.get("context", ""):
-            response += f"\n\n<details><summary> View Sources</summary>\n\n```\n{ctx[:1500]}{'...' if len(ctx) > 1500 else ''}\n```\n</details>"
+            response += f"\n\n<details><summary>View Sources</summary>\n\n```\n{ctx[:1500]}{'...' if len(ctx) > 1500 else ''}\n```\n</details>"
         history.append({"role": "assistant", "content": response})
     except Exception as e:
         history.append({"role": "assistant", "content": f"Error: {e}"})
@@ -120,37 +81,22 @@ def check_status(job_id):
     except Exception as e: return gr.update(visible=True, value=f"Error: {e}")
 
 
-PLACEHOLDER_HTML = '''<div class="chat-placeholder">
-<h4>Welcome to Agentset Gradio Demo</h4>
-<p>Ask questions and get answers based on your ingested documents.</p>
-<div class="steps-label">Quick start:</div>
-<div class="steps">
-<div>Configure your API keys in the sidebar</div>
-<div>Ingest documents in the "Ingest Documents" tab</div>
-<div>Start asking questions below</div>
-</div>
-</div>'''
+
 
 def create_chat_interface():
-    with gr.Column(elem_classes=["chat-container"]):
-        chatbot = gr.Chatbot(elem_id="chatbot", show_label=False, height=400, placeholder=PLACEHOLDER_HTML)
-        with gr.Column(elem_classes=["chat-input-area"]):
-            with gr.Row():
-                msg = gr.Textbox(placeholder="Type your question here...", show_label=False,
-                                 container=False, scale=8, lines=1, max_lines=4, autofocus=True)
-                send = gr.Button("Send", scale=1, variant="primary", size="lg")
-            clear = gr.Button("Clear conversation", size="sm", variant="secondary")
+    with gr.Column():
+        chatbot = gr.Chatbot(show_label=False, height=400)
+        msg = gr.Textbox(placeholder="Type your question...", show_label=False,
+                         container=False, lines=1, max_lines=3, autofocus=True)
         
         msg.submit(chat, [msg, chatbot], [chatbot, msg])
-        send.click(chat, [msg, chatbot], [chatbot, msg])
-        clear.click(lambda: ([], ""), [], [chatbot, msg])
 
 
 def create_ingest_interface():
-    result_box = lambda lbl="Result": gr.Textbox(label=lbl, interactive=False, elem_classes=["result-box"], lines=1, visible=False)
-    with gr.Column(elem_classes=["form-container"]):
-        gr.Markdown("## Ingest Documents\nAdd documents to your knowledge base for AI-powered search and retrieval.")
-        with gr.Tabs(elem_classes=["inner-tabs"]):
+    result_box = lambda lbl="Result": gr.Textbox(label=lbl, interactive=False, lines=1, visible=False)
+    with gr.Column():
+        gr.Markdown("### Ingest Documents\nAdd documents to your knowledge base.")
+        with gr.Tabs():
             with gr.Tab("Text"):
                 txt_content = gr.Textbox(label="Content", lines=5, placeholder="Paste your text content here...")
                 with gr.Row():
@@ -183,9 +129,9 @@ def create_ingest_interface():
 
 
 def create_settings_interface():
-    with gr.Column(elem_classes=["form-container"]):
-        gr.Markdown("## Settings\nConfigure your API keys and model preferences.")
-        with gr.Tabs(elem_classes=["inner-tabs"]):
+    with gr.Column():
+        gr.Markdown("### Settings\nConfigure API keys and model preferences.")
+        with gr.Tabs():
             with gr.Tab("API Configuration"):
                 cfg_openai = gr.Textbox(label="OpenAI API Key", type="password", value=state.openai_api_key, placeholder="sk-...")
                 cfg_agentset = gr.Textbox(label="Agentset API Key", type="password", value=state.agentset_api_key, placeholder="agentset_...")
@@ -201,14 +147,15 @@ def create_settings_interface():
                 set_btn = gr.Button("Save Settings", variant="primary")
                 set_btn.click(lambda *args: gr.update(visible=True, value=save_settings(*args)), [set_model, set_topk, set_score], set_out)
 
-theme = gr.themes.Soft(primary_hue="blue", secondary_hue="slate", neutral_hue="slate",
-                       radius_size="lg", font=[gr.themes.GoogleFont("Inter"), "system-ui", "sans-serif"])
+theme = gr.themes.Base(primary_hue="orange")
 
-with gr.Blocks(title="Agentset RAG Demo") as demo:
+with gr.Blocks(title="Agentset RAG Demo", theme=theme, css=css) as demo:
+    gr.Markdown("<div id='title'>Agentset RAG Demo</div>")
+    gr.Markdown("<div id='desc'>Ask questions about your ingested documents.</div>")
     with gr.Tabs():
         with gr.Tab("Chat", id="chat"): create_chat_interface()
         with gr.Tab("Ingest Documents", id="ingest"): create_ingest_interface()
         with gr.Tab("Settings", id="settings"): create_settings_interface()
 
 if __name__ == "__main__":
-    demo.launch(theme=theme, css=css)
+    demo.launch()
