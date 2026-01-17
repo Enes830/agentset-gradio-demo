@@ -75,10 +75,3 @@ agentset-gradio-demo
 
 - [Agentset Documentation](https://docs.agentset.ai)
 - [OpenAI API](https://platform.openai.com/docs)
-
-- `gradio>=4.0.0` - Web UI framework
-- `openai>=1.0.0` - OpenAI API client
-- `agentset>=0.6.4` - Agentset SDK for document retrieval
-- `python-dotenv>=1.0.0` - Environment variable management
-- `requests>=2.28.0` - HTTP client
-
