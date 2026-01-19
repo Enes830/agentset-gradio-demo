@@ -149,8 +149,8 @@ def create_settings_interface():
 
 theme = gr.themes.Base(primary_hue="orange")
 
-with gr.Blocks(title="Agentset RAG Demo", theme=theme, css=css) as demo:
-    gr.Markdown("<div id='title'>Agentset RAG Demo</div>")
+with gr.Blocks(title="Agentset Gradio Demo", theme=theme, css=css) as demo:
+    gr.Markdown("<div id='title'>Agentset Gradio Demo</div>")
     gr.Markdown("<div id='desc'>Ask questions about your ingested documents.</div>")
     with gr.Tabs():
         with gr.Tab("Chat", id="chat"): create_chat_interface()

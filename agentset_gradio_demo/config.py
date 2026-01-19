@@ -26,6 +26,7 @@ MIN_SCORE = 0.6  # Minimum relevance score (0-1)
 # OpenAI Model Configuration
 OPENAI_MODEL = "gpt-4o-mini"  # Default model
 AVAILABLE_MODELS = [
+    "gpt-5.1",
     "gpt-4o",
     "gpt-4o-mini",
     "gpt-4-turbo",
@@ -33,7 +34,7 @@ AVAILABLE_MODELS = [
     "gpt-3.5-turbo",
     "o1",
     "o1-mini",
-    "o3-mini",
+    "o3-mini"
 ]
 
 # System Prompt for RAG responses
